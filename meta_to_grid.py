@@ -5,10 +5,13 @@ import pandas as pd
 import json
 from shutil import copyfile
 
-#how many heroes per category
-TOP_NR = 15
 #path to YOUR dota 2 remote cfg grid file - UPDATE THIS FOR YOUR SITUATION !
 CFG_PATH = r"C:\Program Files (x86)\Steam\userdata\63878762\570\remote\cfg\hero_grid_config.json"
+
+#how many heroes per category
+TOP_NR = 15
+#change this value if you don't want to override the default grid cfg file, but want the output in a different file
+CFG_OUTPUT_PATH = CFG_PATH
 
 #data dump
 default_grid = {
@@ -677,6 +680,7 @@ heroes= [
         "localized_name": "Dawnbreaker"
     }
 ]
+#end data dump
 
 #Create a backup of the hero grid file in the same folder
 copyfile(CFG_PATH, CFG_PATH+".bck")
@@ -714,5 +718,5 @@ with open(CFG_PATH, 'r') as json_file:
             grid_section['hero_ids'].append(hero_id)
         print(grid_section)
 
-with open(CFG_PATH, 'w') as json_file:
+with open(CFG_OUTPUT_PATH, 'w') as json_file:
         json.dump(data, json_file)
