@@ -6,12 +6,13 @@ import json
 from shutil import copyfile
 
 #how many heroes per category
-TOP_NR = 25
+TOP_NR = 15
+#path to YOUR dota 2 remote cfg grid file - UPDATE THIS FOR YOUR SITUATION !
 CFG_PATH = r"C:\Program Files (x86)\Steam\userdata\63878762\570\remote\cfg\hero_grid_config.json"
 
 #data dump
 default_grid = {
-    "config_name": "Spectral Meta Top 15",
+    "config_name": "Spectral Meta Top X",
     "categories": [
         {
             "category_name": "Core Safelane",
