@@ -1,9 +1,11 @@
-#! /usr/bin/python
+#! /usr/bin/python3
 
 from pyquery import PyQuery
 import pandas as pd
 import json
 from shutil import copyfile
+import datetime
+import requests
 
 #path to YOUR dota 2 remote cfg grid file - UPDATE THIS FOR YOUR SITUATION !
 CFG_PATH = r"C:\Program Files (x86)\Steam\userdata\63878762\570\remote\cfg\hero_grid_config.json"
@@ -11,7 +13,7 @@ CFG_PATH = r"C:\Program Files (x86)\Steam\userdata\63878762\570\remote\cfg\hero_
 #how many heroes per category
 TOP_NR = 15
 #change this value if you don't want to override the default grid cfg file, but want the output in a different file
-CFG_OUTPUT_PATH = CFG_PATH
+CFG_OUTPUT_PATH = r"C:\Users\jkohlenberg\Desktop\meta-to-grid\test.json"
 
 #data dump
 default_grid = {
@@ -63,7 +65,7 @@ default_grid = {
             ]
         },
         {
-            "category_name": "Courtesy of spectral.gg",
+            "category_name": "Last updated on ",
             "x_position": 656.739197,
             "y_position": 7.826088,
             "width": 300.0,
@@ -680,10 +682,17 @@ heroes= [
         "localized_name": "Dawnbreaker"
     }
 ]
+
+update_date_string = "Last updated on "
 #end data dump
+
+def is_date_section(name):
+    return name.startswith(update_date_string) or name == "Courtesy of spectral.gg"
 
 #Create a backup of the hero grid file in the same folder
 copyfile(CFG_PATH, CFG_PATH+".bck")
+
+update_date = datetime.datetime.now().strftime("%d-%m-%Y")
 
 #don't touch these
 roles = ['Core Safelane', 'Core Midlane', 'Core Offlane', 'Support Safelane', 'Support Offlane']
@@ -717,6 +726,12 @@ with open(CFG_PATH, 'r') as json_file:
             hero_id = next(item for item in heroes if item["localized_name"] == hero)['id']
             grid_section['hero_ids'].append(hero_id)
         print(grid_section)
+
+    date_section = next(item for item in grid["categories"] if is_date_section(item["category_name"]))
+    if date_section is not None:
+        #fill date section
+        date_section["category_name"] = update_date_string + update_date
+        
 
 with open(CFG_OUTPUT_PATH, 'w') as json_file:
         json.dump(data, json_file)
