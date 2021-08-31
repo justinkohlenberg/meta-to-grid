@@ -5,10 +5,13 @@ Meta information provided by Spectral.gg
 
 # Usage 
 Run the python script while supplying the following argument:
+
   --cfg_file | -f : The hero grid config file to read as a starting point. Generally this should point to this file: [Steam install path]/userdata/[your_user_id]/570/remote/cfg/hero_grid_config.json
   
 Optional arguments:
+
   --hero_count | -c : Determines the amount of heroes to put in the grid, takes the top X heroes based on ranking (pickrate+winrate)
+  
   --output_cfg | -o : Write the output config file to the specified file, instead of the default. (default = --cfg_file)
   
 # Behaviour
