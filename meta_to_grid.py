@@ -123,13 +123,14 @@ with open(CFG_PATH, 'r') as json_file:
     data = json.load(json_file)
     
     for count in TOP_NR:
-        print(count)
         try:
             grid = next(item for item in data['configs'] if item["config_name"] == "Spectral Meta Top {nr}".format(nr = count))
+            print("Updating existing grid: " + grid["config_name"])
         except StopIteration:
-            data['configs'].append(default_grid)
+            data['configs'].append(default_grid.copy())
             grid = data['configs'][-1]
             grid["config_name"] = "Spectral Meta Top {nr}".format(nr = count)
+            print("Adding new grid: Spectral Meta Top {nr}".format(nr = count))
 
         for role in roles:
             # print(role)
@@ -138,10 +139,10 @@ with open(CFG_PATH, 'r') as json_file:
             grid_section = next(item for item in grid["categories"] if item["category_name"] == role)
             grid_section['hero_ids'] = []
             for hero in heroes_top:
-                print(hero)
+                # print(hero)
                 hero_id = next(item for item in hero_meta_data["result"]["heroes"].keys() if hero_meta_data["result"]["heroes"][str(item)]["name"] == hero)
                 grid_section['hero_ids'].append(hero_id)
-            print(grid_section)
+            # print(grid_section)
 
         date_section = next(item for item in grid["categories"] if is_date_section(item["category_name"]))
         if date_section is not None:
