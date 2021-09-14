@@ -10,7 +10,7 @@ Run the python script while supplying the following argument:
   
 Optional arguments:
 
-  --hero_count | -c : Determines the amount of heroes to put in the grid, takes the top X heroes based on ranking (pickrate+winrate)
+  --hero_count | -c : Determines the amount of heroes to put in the grid, takes the top X heroes based on ranking (pickrate+winrate), multiple values allowed to generate a list for each value
   
   --output_cfg | -o : Write the output config file to the specified file, instead of the default. (default = --cfg_file)
   
